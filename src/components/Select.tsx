@@ -1,12 +1,17 @@
 type Props = {
-  options: string[];
+  options: {
+    id: number;
+    name: string;
+  }[];
 };
 
 const Select = ({ options }: Props) => {
   return (
     <select>
       {options.map((option) => (
-        <option value={option}>{option}</option>
+        <option key={option.id} value={option.id}>
+          {option.name}
+        </option>
       ))}
     </select>
   );

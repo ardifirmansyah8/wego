@@ -1,25 +1,26 @@
 import { Gift, Plus, Search, Star } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Badge from "./components/Badge";
 import Card from "./components/Card";
 import Input from "./components/Input";
 import Select from "./components/Select";
 
-import "./App.css";
-
-const CATEGORIES = [
-  "All",
-  "Sushi",
-  "Pizza",
-  "Burgers",
-  "Hot Meals",
-  "Desserts",
-  "Drinks",
-];
+import "./styles/App.css";
+import { useCategories } from "./hooks/useCategories";
+import { useRestaurants } from "./hooks/useRestaurants";
 
 function App() {
-  const [category, setCategory] = useState("All");
+  const { categories } = useCategories();
+  const { restos, hasLoadMore, onLoadMore } = useRestaurants();
+
+  const [category, setCategory] = useState("");
+
+  useEffect(() => {
+    if (categories.length > 0) {
+      setCategory(categories[0].name);
+    }
+  }, [categories]);
 
   return (
     <>
@@ -30,23 +31,24 @@ function App() {
 
       <section className="category-container">
         <div>
-          {CATEGORIES.map((categoryName) => (
+          {categories.map((item) => (
             <button
-              className={category === categoryName ? "active" : ""}
-              onClick={() => setCategory(categoryName)}
+              key={item.name}
+              className={category === item.name ? "active" : ""}
+              onClick={() => setCategory(item.name)}
             >
-              {categoryName}
+              {item.name}
             </button>
           ))}
         </div>
-        <Select options={CATEGORIES} />
+        <Select options={categories} />
       </section>
 
       <section className="resto-container">
-        {Array.from({ length: 9 }).map(() => (
+        {restos.map((resto) => (
           <Card
-            imgUrl="https://zen.wego.com/cdn-cgi/image/width=600/web/mock/exam/drink.jpg"
-            title="Restaurant Name"
+            imgUrl={resto.imageUrl}
+            title={resto.name}
             flag={
               <Badge variant="primary">
                 <Gift color="white" width={20} height={20} />
@@ -55,24 +57,30 @@ function App() {
           >
             <Badge>
               <Star color="#656565" width={16} height={16} />
-              <label>4.7</label>
+              <label>{Math.round(resto.rating)}</label>
             </Badge>
             <Badge>
-              <label>50-70 min</label>
+              <label>
+                {resto.minCookTime}-{resto.maxCookTime} min
+              </label>
             </Badge>
-            <Badge variant="new">
-              <label>New</label>
-            </Badge>
+            {resto.isNew && (
+              <Badge variant="new">
+                <label>New</label>
+              </Badge>
+            )}
           </Card>
         ))}
       </section>
 
-      <section className="show-more-container">
-        <button>
-          <Plus width={16} height={16} />
-          Show More
-        </button>
-      </section>
+      {hasLoadMore && (
+        <section className="show-more-container">
+          <button onClick={() => onLoadMore()}>
+            <Plus width={16} height={16} />
+            Show More
+          </button>
+        </section>
+      )}
     </>
   );
 }
