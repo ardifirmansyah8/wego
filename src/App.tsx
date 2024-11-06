@@ -4,6 +4,7 @@ import { useState } from "react";
 import Badge from "./components/Badge";
 import Card from "./components/Card";
 import Input from "./components/Input";
+import Select from "./components/Select";
 
 import "./App.css";
 
@@ -28,14 +29,17 @@ function App() {
       </section>
 
       <section className="category-container">
-        {CATEGORIES.map((categoryName) => (
-          <button
-            className={category === categoryName ? "active" : ""}
-            onClick={() => setCategory(categoryName)}
-          >
-            {categoryName}
-          </button>
-        ))}
+        <div>
+          {CATEGORIES.map((categoryName) => (
+            <button
+              className={category === categoryName ? "active" : ""}
+              onClick={() => setCategory(categoryName)}
+            >
+              {categoryName}
+            </button>
+          ))}
+        </div>
+        <Select options={CATEGORIES} />
       </section>
 
       <section className="resto-container">

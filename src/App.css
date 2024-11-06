@@ -22,6 +22,28 @@ input:focus {
   outline: none;
 }
 
+/* Select */
+select {
+  background: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 8px;
+  box-shadow: 0 2px 4px rgba(65, 65, 65, 0.1);
+  width: 100%;
+}
+
+/* Button */
+button {
+  background: #fff;
+  min-width: 60px;
+  border: 1px solid #fec800;
+  padding: 12px 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 /* Card */
 .card {
   background: white;
@@ -71,18 +93,6 @@ input:focus {
   color: #52ba99;
 }
 
-/* Button */
-button {
-  background: #fff;
-  min-width: 60px;
-  border: 1px solid #fec800;
-  padding: 12px 24px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .search-container {
   position: relative;
 }
@@ -93,21 +103,25 @@ button {
   left: 12px;
 }
 
-.category-container {
+.category-container div {
   display: flex;
 }
 
-.category-container button:first-child {
+.category-container select {
+  display: none;
+}
+
+.category-container div button:first-child {
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
 }
 
-.category-container button:last-child {
+.category-container div button:last-child {
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
 }
 
-.category-container button.active {
+.category-container div button.active {
   background: #fec800;
   font-weight: bold;
 }
@@ -126,4 +140,31 @@ button {
 
 .show-more-container button {
   border-radius: 8px;
+}
+
+/* Responsive */
+@media only screen and (max-width: 500px) {
+  #root {
+    width: 100%;
+    padding: 16px;
+    margin: 0;
+    overflow-y: auto;
+  }
+
+  input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .category-container div {
+    display: none;
+  }
+
+  .category-container select {
+    display: block;
+  }
+
+  .resto-container {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
 }
