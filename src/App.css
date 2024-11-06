@@ -46,6 +46,7 @@ button {
 
 /* Card */
 .card {
+  position: relative;
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(65, 65, 65, 0.1);
@@ -58,6 +59,18 @@ button {
   width: 100%;
   height: 150px;
   object-fit: cover;
+}
+
+.card-flag {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.card-flag > .badge {
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+  padding: 4px 12px;
 }
 
 .card-desc {
@@ -91,6 +104,18 @@ button {
 
 .badge.new {
   color: #52ba99;
+}
+
+.badge.primary {
+  background: #01aeff;
+}
+
+.badge.alert {
+  background: #ff6b70;
+}
+
+.badge.info {
+  background: #8f64fd;
 }
 
 .search-container {

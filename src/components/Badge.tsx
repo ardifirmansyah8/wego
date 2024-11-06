@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 type Props = {
-  variant?: "new";
+  variant?: "new" | "primary" | "alert" | "info";
   children: ReactNode;
 };
 

@@ -1,4 +1,4 @@
-import { Plus, Search, Star } from "lucide-react";
+import { Gift, Plus, Search, Star } from "lucide-react";
 import { useState } from "react";
 
 import Badge from "./components/Badge";
@@ -47,6 +47,11 @@ function App() {
           <Card
             imgUrl="https://zen.wego.com/cdn-cgi/image/width=600/web/mock/exam/drink.jpg"
             title="Restaurant Name"
+            flag={
+              <Badge variant="primary">
+                <Gift color="white" width={20} height={20} />
+              </Badge>
+            }
           >
             <Badge>
               <Star color="#656565" width={16} height={16} />
