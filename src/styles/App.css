@@ -118,6 +118,35 @@ button {
   background: #8f64fd;
 }
 
+/* Loader */
+.loader {
+  border: 8px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 8px solid #3498db;
+  width: 64px;
+  height: 64px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .search-container {
   position: relative;
 }
@@ -167,11 +196,20 @@ button {
   border-radius: 8px;
 }
 
+.empty-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+}
+
 /* Responsive */
 @media only screen and (max-width: 500px) {
   #root {
     width: 100%;
-    padding: 16px;
+    padding: 24px 16px;
     margin: 0;
     overflow-y: auto;
   }

@@ -1,6 +1,6 @@
 type Props = {
   options: {
-    id: number;
+    id: string;
     name: string;
   }[];
 };

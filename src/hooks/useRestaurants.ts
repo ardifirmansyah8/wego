@@ -17,8 +17,9 @@ interface Restaurant {
 const LIMIT = 9;
 
 export const useRestaurants = () => {
-  const [rawRestos, setRawRestos] = useState<Restaurant[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [rawRestos, setRawRestos] = useState<Restaurant[]>([]);
+  const [filteredRestos, setFilteredRestos] = useState<Restaurant[]>([]);
   const [restos, setRestos] = useState<Restaurant[]>([]);
   const [offset, setOffset] = useState(0);
   const [hasLoadMore, setHasLoadMore] = useState(true);
@@ -31,16 +32,42 @@ export const useRestaurants = () => {
     );
     const data = await response.json();
     setRawRestos(data.foods);
+    setFilteredRestos(data.foods);
     setIsLoading(false);
   };
 
   const onLoadMore = () => {
     const nextOffset = offset + LIMIT;
-    setRestos([...restos, ...rawRestos.slice(nextOffset, nextOffset + LIMIT)]);
+    setRestos([
+      ...restos,
+      ...filteredRestos.slice(nextOffset, nextOffset + LIMIT),
+    ]);
     setOffset(nextOffset);
-    if (nextOffset + LIMIT >= rawRestos.length) {
+    if (nextOffset + LIMIT >= filteredRestos.length) {
       setHasLoadMore(false);
     }
+  };
+
+  const onFilterResto = (query: string, categoryId: string) => {
+    setIsLoading(true);
+    let filtered = null;
+    if (categoryId !== "all") {
+      filtered = rawRestos.filter((resto) => {
+        return (
+          resto.name.toLowerCase().includes(query.toLowerCase()) &&
+          resto.categoryId.includes(categoryId)
+        );
+      });
+    } else {
+      filtered = rawRestos.filter((resto) => {
+        return resto.name.toLowerCase().includes(query.toLowerCase());
+      });
+    }
+    setOffset(0);
+    setFilteredRestos(filtered);
+    setRestos(filtered.slice(0, LIMIT));
+    setHasLoadMore(filtered.length > LIMIT);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -48,16 +75,17 @@ export const useRestaurants = () => {
   }, []);
 
   useEffect(() => {
-    if (rawRestos.length > 0) {
-      setRestos(rawRestos.slice(offset, LIMIT));
+    if (filteredRestos.length > 0) {
+      setRestos(filteredRestos.slice(offset, LIMIT));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rawRestos]);
+  }, [filteredRestos]);
 
   return {
     isLoading,
     hasLoadMore,
     restos,
+    onFilterResto,
     onLoadMore,
   };
 };
