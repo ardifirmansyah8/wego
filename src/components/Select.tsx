@@ -1,13 +1,15 @@
 type Props = {
+  value: string;
   options: {
     id: string;
     name: string;
   }[];
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
-const Select = ({ options }: Props) => {
+const Select = ({ value, options, onChange }: Props) => {
   return (
-    <select>
+    <select value={value} onChange={onChange}>
       {options.map((option) => (
         <option key={option.id} value={option.id}>
           {option.name}

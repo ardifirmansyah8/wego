@@ -35,6 +35,23 @@ function App() {
     onFilterResto(searchInput.current?.value || "", categoryId);
   };
 
+  const renderFlag = (promotion: string) => {
+    if (promotion === "gift") {
+      return (
+        <Badge variant="primary">
+          <Gift color="white" width={20} height={20} />
+        </Badge>
+      );
+    }
+    if (promotion === "1+1") {
+      return <Badge variant="info">1 + 1</Badge>;
+    }
+    if (promotion === "discount") {
+      return <Badge variant="alert">%</Badge>;
+    }
+    return null;
+  };
+
   return (
     <>
       <section className="search-container">
@@ -64,7 +81,11 @@ function App() {
             </button>
           ))}
         </div>
-        <Select options={categories} />
+        <Select
+          value={category}
+          options={[{ id: "all", name: "All" }, ...categories]}
+          onChange={(e) => handleFilter(e.target.value)}
+        />
       </section>
 
       {isLoading && (
@@ -80,34 +101,32 @@ function App() {
         </div>
       )}
       {!isLoading && restos.length > 0 && (
-        <section className="resto-container">
-          {restos.map((resto) => (
-            <Card
-              key={resto.id}
-              imgUrl={resto.imageUrl}
-              title={resto.name}
-              flag={
-                <Badge variant="primary">
-                  <Gift color="white" width={20} height={20} />
+        <section>
+          <div className="resto-container">
+            {restos.map((resto) => (
+              <Card
+                key={resto.id}
+                imgUrl={resto.imageUrl}
+                title={resto.name}
+                flag={renderFlag(resto.promotion)}
+              >
+                <Badge>
+                  <Star color="#656565" width={16} height={16} />
+                  <label>{Math.round(resto.rating)}</label>
                 </Badge>
-              }
-            >
-              <Badge>
-                <Star color="#656565" width={16} height={16} />
-                <label>{Math.round(resto.rating)}</label>
-              </Badge>
-              <Badge>
-                <label>
-                  {resto.minCookTime}-{resto.maxCookTime} min
-                </label>
-              </Badge>
-              {resto.isNew && (
-                <Badge variant="new">
-                  <label>New</label>
+                <Badge>
+                  <label>
+                    {resto.minCookTime}-{resto.maxCookTime} min
+                  </label>
                 </Badge>
-              )}
-            </Card>
-          ))}
+                {resto.isNew && (
+                  <Badge variant="new">
+                    <label>New</label>
+                  </Badge>
+                )}
+              </Card>
+            ))}
+          </div>
 
           {hasLoadMore && (
             <div className="show-more-container">

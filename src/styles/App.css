@@ -71,6 +71,7 @@ button {
   border-top-right-radius: 0;
   border-bottom-left-radius: 0;
   padding: 4px 12px;
+  color: white;
 }
 
 .card-desc {
@@ -190,6 +191,7 @@ button {
   display: flex;
   justify-content: center;
   width: 100%;
+  margin-top: 32px;
 }
 
 .show-more-container button {

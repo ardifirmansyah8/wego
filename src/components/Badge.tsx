@@ -6,7 +6,9 @@ type Props = {
 };
 
 const Badge = ({ variant, children }: Props) => {
-  return <div className={`badge ${variant}`}>{children}</div>;
+  return (
+    <div className={`badge${variant ? ` ${variant}` : ""}`}>{children}</div>
+  );
 };
 
 export default Badge;
