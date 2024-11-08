@@ -26,7 +26,7 @@ describe("Select Component", () => {
   it("sets the correct option as selected based on the value prop", () => {
     render(<Select value="2" options={options} onChange={vi.fn()} />);
 
-    const selectElement = screen.getByRole("combobox");
+    const selectElement: HTMLSelectElement = screen.getByRole("combobox");
     expect(selectElement.value).toBe("2");
   });
 

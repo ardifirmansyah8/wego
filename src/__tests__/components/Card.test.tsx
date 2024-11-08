@@ -17,7 +17,7 @@ describe("Card Component", () => {
 
     // Check the image
     const image = getByAltText(imgUrl);
-    expect(image.src).toContain(imgUrl);
+    expect(image.getAttribute("src")).toContain(imgUrl);
 
     // Check the title
     const titleLabel = getByText(title);

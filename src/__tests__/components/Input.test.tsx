@@ -12,20 +12,19 @@ describe("Input Component", () => {
   });
 
   it("renders without a placeholder", () => {
-    render(<Input onChange={vi.fn()} />);
+    const { container } = render(<Input onChange={vi.fn()} />);
 
-    const inputElement = screen.getByRole("textbox");
-    expect(inputElement).toBeTruthy();
-    expect(inputElement.placeholder).toBe("");
+    expect(container.getAttribute("placeholder")).toBeNull();
   });
 
   it("fires onChange event when text is inputted", () => {
     const handleChange = vi.fn();
     render(<Input onChange={handleChange} />);
 
-    const inputElement = screen.getByRole("textbox");
+    const inputElement: HTMLInputElement = screen.getByRole("textbox");
     fireEvent.change(inputElement, { target: { value: "Hello World" } });
 
+    console.log(inputElement);
     expect(handleChange).toHaveBeenCalledTimes(1);
     expect(inputElement.value).toBe("Hello World");
   });

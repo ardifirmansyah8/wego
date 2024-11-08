@@ -13,6 +13,6 @@ describe("Loader Component", () => {
   it('applies the "loader" class to the div', () => {
     const { container } = render(<Loader />);
 
-    expect(container.firstChild.className).toBe("loader");
+    expect(container.firstChild).toHaveClass("loader");
   });
 });
